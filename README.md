@@ -1,5 +1,5 @@
 # Potential Talents - An Apziva Project (#3)
-By Samuel Alter
+By Samuel Alter  
 Apziva: 6bImatZVlK6DnbEo
 
 ## Summary<a name='summary'></a>
