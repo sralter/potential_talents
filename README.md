@@ -7,4 +7,6 @@ Using NLP techniques to analyze a job candidate dataset
 
 ### Overview
 
+![Histogram of user connections](figures/histogram_connections.jpg)
+
 Under construction...
