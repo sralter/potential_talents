@@ -14,3 +14,4 @@ Using NLP techniques to analyze a job candidate dataset
 ![Map of North American applicants](figures/3_map)
 
 Under construction...
+
