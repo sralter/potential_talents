@@ -11,6 +11,7 @@ Using NLP techniques to analyze a job candidate dataset
 
 ![Boxplot of those with less than 500 connections](figures/3_boxplot_no500.jpg)
 
-![Map of North American applicants](figures/3_map)
+![Map of North American applicants](figures/3_map.jpg)
 
 Under construction...
+
