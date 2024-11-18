@@ -16,3 +16,6 @@ Under construction...
 ![Map of North American applicants](figures/3_map.jpg)
 
 ![Top 10 most common words](figures/3_top10words.jpg)
+
+![Wordcloud](figures/3_wordcloud.jpg)
+
