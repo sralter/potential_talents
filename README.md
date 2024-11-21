@@ -35,3 +35,4 @@ Under construction...
 ![Tfidf vs Word2Vec](figures/3_positionchange_1to2.jpg)
 ![Word2Vec vs GloVe](figures/3_positionchange_2to3.jpg)
 ![GloVe vs fastText](figures/3_positionchange_3to4.jpg)
+![Tfidf vs fastText](figures/3_positionchange_1to4.jpg)
