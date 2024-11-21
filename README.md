@@ -31,3 +31,7 @@ Under construction...
 | 21 | Aspiring Human Resources Professional | Raleigh, NC |  |
 | 36 | Aspiring Human Resources Specialist | New York, NY | 0.498402 |
 | 6 | Aspiring Human Resources Specialist | New York, NY |  |
+
+![Tfidf vs Word2Vec](figures/3_positionchange_1to2.jpg)
+![Word2Vec vs GloVe](figures/3_positionchange_2to3.jpg)
+![GloVe vs fastText](figures/3_positionchange_3to4.jpg)
