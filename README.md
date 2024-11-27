@@ -62,7 +62,7 @@ Viewing the data as a boxplot in Figures [2](#fig2) and [3](#fig3) shows this pa
 There is some location data and it would be good to see where the candidates are located in the world. [Figure 4](#fig4) shows a choropleth of the candidates' locations.
 
 [Figure 4](#fig4): Choropleth of candidates' locations. 
-Three candidates did not provide a city so they are not included in this map.
+Three US-based candidates did not provide a city so they are not included in this map.
 
 ![Map of applicants](figures/3_map_choropleth.jpg)
 
