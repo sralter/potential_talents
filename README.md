@@ -76,11 +76,60 @@ I defined a preprocessor that didn't include lemmatization so as to preserve the
 
 It's fun to make a [wordcloud](#fig6) which shows all the words in the corpus, sized by their prevalence. We can see that "human","resources", and "aspiring" all appear frequently in the dataset.
 
-![Wordcloud](figures/3_wordcloud.jpg)(#fig6)
+[Figure 6](#fig6): Wordcloud of most common words in the candidates' job titles
+
+![Wordcloud](figures/3_wordcloud.jpg)
+
+#### Text Embedding and Cosine Similarity<a name='embedding'></a>
+
+As a reminder, we are currently helping the company understand which candidates are a best fit for their human resources position. As such, the company is focusing on two search terms:  
+* **"Aspiring human resources"**, or
+* **"Seeking human resources"**
+
+We will use the same preprocessor as above, without lemmatization, and will use the **cosine similarity** to determine the similarity between the job titles and the search terms.
+
+We used five methods for text embedding:  
+* **`Tfidf`**
+* **`Word2Vec`**
+* **`GloVe`**
+* **`fastText`**, and
+* **`SBERT`**
+
+##### Notes on methods<a name='notes'></a>
+
+The steps for these methods are similar:  
+1. Load word embeddings
+1. Process job titles and search terms
+1. Calculate cosine similarity
+
+* **`GloVe`**
+> The [`GloVe`](https://nlp.stanford.edu/projects/glove/) model (Global Vectors for Word Representation) is a word embedding model that provides a dense vector representation of words similar to `Word2Vec`. `GloVe` was trained on matrix factorization techniques.
+> We used the 6B model, which can be downloaded from [here](https://nlp.stanford.edu/data/glove.6B.zip).
+
+* **`fastText`**
+> [`fastText`](https://fasttext.cc) is another word embedding model with the advantage that it can handle out-of-vocabulary (OOV) words using subword embeddings. Said another way, it can generate embeddings for words that are not in the training vocabulary, which can be helpful for uncommon words or typos.
+> We'll be using the [Wiki News 300d](https://dl.fbaipublicfiles.com/fasttext/vectors-english/wiki-news-300d-1M-subword.vec.zip) vector with subwords, measuring at 16 billion tokens. This was trained on Wikipedia in 2017.
+
+* **`SBERT`**
+> Sentence-BERT, or [SBERT](https://www.sbert.net), is designed to generate sentence embeddings rather than individual word embeddings like the previous four methods we've employed.
+
+With five methods, I wanted to plot the similarity scores over time. Comparing how to each method changes the position of the candidates sequentially was interesting, as the methods gave different candidates to have the highest similarity score. You can view the comparison chart below:
+
+[Figure 7](#fig7): Comparing the cosine similarity scores based on methods of text embedding of the candidates' job title to the search terms
 
 ![Comparing methods](figures/3_methods.jpg)
 
+What about comparing the candidates overall, across all the methods? I decided to come up with the following scoring system:  
+* If you are in first place for a particular method, you get no penalty.
+* Second place gets one point, third place gets two points, etc.
+* Save the points for each candidate and for each method
+* Take the mean of the points across all the methods
+* Then [plot the scores](#fig8) using this penalty or "golf"-style scoring method.
+
+[Figure 8](#fig8): Best scoring candidates overall
+
 ![Best candidate scores](figures/3_overallscores.jpg)
 
+## Modeling <a name='modeling'></a>
 
 Under construction...
