@@ -43,22 +43,27 @@ There are no nulls in the dataset. There are 104 total observations.
 
 Most applicants have more than 500 connections (n=44). But if we look at [Figure 1](#fig1) to see those that have less than 500 connections, the majority of this group have around 50:
 
-[Figure 1: Histogram of Connections](#fig1)
+[Figure 1](#fig1): Histogram of Connections
+
 ![Histogram of user connections](figures/3_histogram_connections.jpg)
 
 Viewing the data as a boxplot in Figures [2](#fig2) and [3](#fig3) shows this patten well:
 
 [Figure 2](#fig2): Boxplot of all candidate's connections
+
 ![Boxplot of everyone's connections](figures/3_boxplot_connections.jpg)
 
 [Figure 3](#fig3): Boxplot of candidates who have fewer than 500 connections
+
 ![Boxplot of those with less than 500 connections](figures/3_boxplot_no500.jpg)
 
 ### Geographic Locations<a name='map'></a>
 
 There is some location data and it would be good to see where the candidates are located in the world. [Figure 4](#fig4) shows a choropleth of the candidates' locations.
 
-[Figure 4](#fig4): Choropleth of candidates' locations. Three candidates did not provide a city so they are not included in this map.
+[Figure 4](#fig4): Choropleth of candidates' locations. 
+Three candidates did not provide a city so they are not included in this map.
+
 ![Map of applicants](figures/3_map_choropleth.jpg)
 
 ### Initial NLP <a name='nlp-init'></a>
@@ -66,9 +71,12 @@ There is some location data and it would be good to see where the candidates are
 I defined a preprocessor that didn't include lemmatization so as to preserve the specific words included in the job titles. After running the preprocessor over the job titles, I plotted the [10 most-common words](#fig5) in the corpus:
 
 [Figure 5](#fig5): Top 10 most-common words in the candidates' job titles
+
 ![Top 10 most common words](figures/3_top10words.jpg)
 
-![Wordcloud](figures/3_wordcloud.jpg)
+It's fun to make a [wordcloud](#fig6) which shows all the words in the corpus, sized by their prevalence. We can see that "human","resources", and "aspiring" all appear frequently in the dataset.
+
+![Wordcloud](figures/3_wordcloud.jpg)(#fig6)
 
 ![Comparing methods](figures/3_methods.jpg)
 
