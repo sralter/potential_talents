@@ -49,7 +49,7 @@ Most applicants have more than 500 connections (n=44). But if we look at [Figure
 Viewing the data as a boxplot in Figures [2](#fig2) and [3](#fig3) shows this patten well:
 
 [Figure 2](#fig2): Boxplot of all candidate's connections
-![Boxplot of everyone's connections](figures/3_boxplot.jpg)
+![Boxplot of everyone's connections](figures/3_boxplot_connections.jpg)
 
 [Figure 3](#fig3): Boxplot of candidates who have fewer than 500 connections
 ![Boxplot of those with less than 500 connections](figures/3_boxplot_no500.jpg)
