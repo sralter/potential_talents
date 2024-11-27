@@ -122,11 +122,12 @@ With five methods, I wanted to plot the similarity scores over time. Comparing h
 ![Comparing methods](figures/3_methods.jpg)
 
 What about comparing the candidates overall, across all the methods? I decided to come up with the following scoring system:  
-* If you are in first place for a particular method, you get no penalty.
+* If you are in first place for a particular method, you get no penalty
 * Second place gets one point, third place gets two points, etc.
+* Any candidate equal to or beyond 10th place gets 10 penalty points
 * Save the points for each candidate and for each method
 * Take the mean of the points across all the methods
-* Then [plot the scores](#fig8) using this penalty or "golf"-style scoring method.
+* Then [plot the scores](#fig8) using this penalty or "golf"-style scoring method
 
 [Figure 8](#fig8): Best scoring candidates overall
 
