@@ -5,8 +5,8 @@ Apziva: 6bImatZVlK6DnbEo
 ## Summary<a name='summary'></a>
 
 Using NLP techniques to analyze a job candidate dataset. This project is split into two parts:
-* **Part 1**: More straightforward NLP analysis to ultimately rank the candidates base on their job title's similarity to the search terms
-* **Part 2**: Implementing machine learning models for [Learning to Rank](https://towardsdatascience.com/learning-to-rank-a-complete-guide-to-ranking-using-machine-learning-4c9688d370d4) scoring systems.
+* [**Part 1**](#eda): More straightforward NLP analysis to ultimately rank the candidates base on their job title's similarity to the search terms
+* [**Part 2**](#modeling): Implementing machine learning models for [Learning to Rank](https://towardsdatascience.com/learning-to-rank-a-complete-guide-to-ranking-using-machine-learning-4c9688d370d4) scoring systems.
 
 ## Overview<a name='overview'></a>
 
