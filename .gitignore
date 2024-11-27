@@ -3,3 +3,7 @@
 scratch.ipynb
 *.gv
 data/
+*.gv.png
+*.gv.pdf
+*.gv.jpg
+
