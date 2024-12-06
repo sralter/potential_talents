@@ -146,6 +146,8 @@ The final step before **Part 2** is to prepare the data for the neural network t
 
 ## Part 2 - Machine learning models using Learning to Rank systems <a name='p2'></a>
 
+### RankNet<a name='ranknet'></a>
+
 `RankNet`, a pairwise ranking algorithm, is defined by its specific ranking methodology rather than the specifics of its architecture. It is defined by:
 * **Pairwise comparison** of pairs of inputs
 * **Sigmoid-based** probability output
@@ -171,11 +173,21 @@ See below for an image of the architecture of the network. I opted for a sequent
 I also defined a forward pass for the network, which takes two inputs and computes the difference in their scores. This is a key step as it helps to define the algorithm as RankNet.
 
 Finally, I defined training and testing functions:
+
 **Training function**
 > Uses batching, a binary cross-entropy loss calculation with logits, an optimizer for the backward pass, a sigmoid conversion to turn logits to probabilities, thresholds probabilities to 0.5 for binary classification, and outputs the loss and accuracy for each epoch
+
 **Testing function**
 > Uses a similar proceses involving batching, loss calculation, conversion of logits to probabilities, computing the average test loss and accuracy, and finally compiles the probability results into a dataframe
 
 ![RankNet architecture](figures/3_ranknet_architecture.jpg.jpg)
+
+To log how many times each candidate "won" the probability determination, I created a for loop to count each time one candidate scored a higher probability than their pair. In a similar fashion to [Figure 8](#fig8), I plotted the results:
+
+![RankNet results](figures/3_ranknet_results.jpg)
+
+### LambdaRank<a name='lambda'></a>
+
+
 
 Under construction...
