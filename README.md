@@ -168,7 +168,13 @@ See below for an image of the architecture of the network. I opted for a sequent
 7. **LeadyReLU Activation** to reintroduce non-linearity
 8. **Fully-connected** output layer with 256 inputs and 1 output
 
-I also define a forward pass for the network, which takes two inputs and computes the difference in their scores. This is a key step as it helps to define the algorithm as RankNet.
+I also defined a forward pass for the network, which takes two inputs and computes the difference in their scores. This is a key step as it helps to define the algorithm as RankNet.
+
+Finally, I defined training and testing functions:
+**Training function**
+> Uses batching, a binary cross-entropy loss calculation with logits, an optimizer for the backward pass, a sigmoid conversion to turn logits to probabilities, thresholds probabilities to 0.5 for binary classification, and outputs the loss and accuracy for each epoch
+**Testing function**
+> Uses a similar proceses involving batching, loss calculation, conversion of logits to probabilities, computing the average test loss and accuracy, and finally compiles the probability results into a dataframe
 
 ![RankNet architecture](figures/3_ranknet_architecture.jpg.jpg)
 
