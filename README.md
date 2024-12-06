@@ -6,7 +6,7 @@ Apziva: 6bImatZVlK6DnbEo
 
 Using NLP techniques to analyze a job candidate dataset. This project is split into two parts:
 * [**Part 1**](#eda): More straightforward NLP analysis to ultimately rank the candidates base on their job title's similarity to the search terms
-* [**Part 2**](#modeling): Implementing machine learning models for [Learning to Rank](https://towardsdatascience.com/learning-to-rank-a-complete-guide-to-ranking-using-machine-learning-4c9688d370d4) scoring systems.
+* [**Part 2**](#p2): Implementing machine learning models for [Learning to Rank](https://towardsdatascience.com/learning-to-rank-a-complete-guide-to-ranking-using-machine-learning-4c9688d370d4) scoring systems.
 
 ## Overview<a name='overview'></a>
 
@@ -112,7 +112,7 @@ The steps for these methods are similar:
 > [`fastText`](https://fasttext.cc) is another word embedding model with the advantage that it can handle out-of-vocabulary (OOV) words using subword embeddings. Said another way, it can generate embeddings for words that are not in the training vocabulary, which can be helpful for uncommon words or typos.
 > We'll be using the [Wiki News 300d](https://dl.fbaipublicfiles.com/fasttext/vectors-english/wiki-news-300d-1M-subword.vec.zip) vector with subwords, measuring at 16 billion tokens. This was trained on Wikipedia in 2017.
 
-* **`SBERT`**
+* **`SBERT`**<a name='sbert'></a>
 > Sentence-BERT, or [SBERT](https://www.sbert.net), is designed to generate sentence embeddings rather than individual word embeddings like the previous four methods we've employed.
 
 With five methods, I wanted to plot the similarity scores over time. Comparing how to each method changes the position of the candidates sequentially was interesting, as the methods gave different candidates to have the highest similarity score. You can view the comparison chart below:
@@ -133,6 +133,43 @@ What about comparing the candidates overall, across all the methods? I decided t
 
 ![Best candidate scores](figures/3_overallscores.jpg)
 
-## Part 2 - Machine learning models using Learning to Rank systems <a name='modeling'></a>
+Using this compound score, I applied a rank to the candidates. Looking at the ranks, I saw that the models were not perfect, as some candidates with job titles that match reasonably well the sentiment if not the letter of the search terms are getting ranked a lot lower than others.
+
+RankNet, the first neural network that we will use in the [next section](#p2), requires that the job titles be vectorized. I will use the final method, [SBERT](#sbert), as that is a robust method of word embedding. Thankfully, we can use the dataframe that we computed in the SBERT section.
+
+I will also manually adjust some rankings and save those to a new column.
+
+The final step before **Part 2** is to prepare the data for the neural network training. This involves three steps:
+1. **Generate pairs** to rank the candidates
+2. Use `train_test_split` to partition the dataset into training and testing splits
+3. Save the splits to **parquet**
+
+## Part 2 - Machine learning models using Learning to Rank systems <a name='p2'></a>
+
+`RankNet`, a pairwise ranking algorithm, is defined by its specific ranking methodology rather than the specifics of its architecture. It is defined by:
+* **Pairwise comparison** of pairs of inputs
+* **Sigmoid-based** probability output
+* **Loss function** involving **Binary Cross-Entropy Loss** to compute error between predicted probabilities and true pairwise labels
+* **Backpropagation and gradient decent** allows for training and updating weights using gradients calculated from the pairwise ranking loss
+
+I was curious if there was something inherent in the architecture of the neural network that made the algorithm RankNet. I learned that the architecture in fact is not fixed and we can:
+* Add or remove layers
+* Change the number of neurons in the hidden layers
+* Adjust activation functions
+* Change dropout rates
+
+See below for an image of the architecture of the network. I opted for a sequential stack of layers involving the following:
+1. **Fully-connected** layer with 512 inputs and 512 outputs, which projects the input features into a higher-dimensional space
+2. **Batch normalization** transforms the activatiosn to have zero mean and unit variance within each batch
+3. **Dropout** layer to randomly set 50% of the activations to zero during training, which prevents overfitting by introducing randomness in training
+4. **LeakyReLU Activation** introduces non-linearity and helps improve the model's learning capability
+5. **Fully-connected** layer with 512 inputs, outputting 256 to compress the feature space to focus on the most important representations
+6. **Normalization and Dropout** layers to stabilize training and reduce overfitting
+7. **LeadyReLU Activation** to reintroduce non-linearity
+8. **Fully-connected** output layer with 256 inputs and 1 output
+
+I also define a forward pass for the network, which takes two inputs and computes the difference in their scores. This is a key step as it helps to define the algorithm as RankNet.
+
+![RankNet architecture](figures/3_ranknet_architecture.png)
 
 Under construction...
