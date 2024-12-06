@@ -170,6 +170,6 @@ See below for an image of the architecture of the network. I opted for a sequent
 
 I also define a forward pass for the network, which takes two inputs and computes the difference in their scores. This is a key step as it helps to define the algorithm as RankNet.
 
-![RankNet architecture](figures/3_ranknet_architecture.jpg)
+![RankNet architecture](figures/3_ranknet_architecture.jpg.jpg)
 
 Under construction...
