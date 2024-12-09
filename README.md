@@ -4,11 +4,35 @@ Apziva: 6bImatZVlK6DnbEo
 
 ## Summary<a name='summary'></a>
 
-Using NLP techniques to analyze a job candidate dataset. This project is split into two parts:
+This project uses NLP techniques, like word embedding and Learning-to-Rank systems using neural networks (RankNet with PyTorch) and LightGBM's LGBMRanker to analyze a job candidate dataset. This project is split into two parts:
 * [**Part 1**](#eda): More straightforward NLP analysis to ultimately rank the candidates base on their job title's similarity to the search terms
 * [**Part 2**](#p2): Implementing machine learning models for [Learning to Rank](https://towardsdatascience.com/learning-to-rank-a-complete-guide-to-ranking-using-machine-learning-4c9688d370d4) scoring systems.
-  * [**RankNet**](#ranknet)
-  * [**LambdaRank**](#lambda)
+
+### Table of Contents<a name='toc'></a>
+
+1. Project introduction  
+1.1. [Summary](#summary)  
+1.2. [Table of Contents](#toc)  
+1.3. [Overview](#overview)  
+   1.3.1. [Goals](#goals)  
+   1.3.2. [The Dataset](#dataset)  
+2. [Part 1: EDA and Candidate Ranking from Text Embedding](#eda)  
+   2.1. [Connections](#connections)  
+   2.2. [Geographic Locations](#map)  
+   2.3. [Initial NLP](#nlp-init)  
+      2.3.1. [Text Embedding and Cosine Similarity](#embedding)  
+         2.3.1.1. [Notes on methods](#notes)  
+            2.3.1.1.1. [GloVe](#glove)  
+            2.3.1.1.2. [fastText](#fasttext)  
+            2.3.1.1.3. [SBERT](#sbert)  
+3. [Part 2 - Machine Learning Models Using Learning to Rank Systems](#p2)  
+   3.1. [RankNet](#ranknet)  
+   3.2. [LambdaRank](#lambda)  
+      3.2.1. [Prepare the data](#1prep)  
+      3.2.2. [Split the data](#2split)  
+      3.2.3. [Train the LambdaRank model](#3train)  
+      3.2.4. [Test, evaluate, and plot](#4test)  
+4. [Conclusion](#conc)  
 
 ## Overview<a name='overview'></a>
 
@@ -225,6 +249,8 @@ I split the data into training, validation, and testing sets. I defined the **gr
 
 #### 3. Train the LambdaRank model<a name='3train'></a>
 
+I used the following parameters to train the model:
+
 | Parameter | Detail |
 |---|---|
 | objective | `lambdarank ` |
@@ -239,6 +265,18 @@ Note: I defined a random seed at the beginning of this project and used it throu
 
 #### 4. Test, evaluate, and plot<a name='4test'></a>
 
-The model achieved an NDCG@5 score of 0.9223, which is quite good! The MRR score was 
+The model achieved an NDCG@5 score of 0.9223, which is quite good! The MRR score was 1. This is exceptionally high and probably suggests that the model is overfitting in some way.
+
+I thought to run a quick Optuna hyperparameter optimization search, though the resulting NDCG@5 score was lower, at 0.8969. The MRR score stayed at 1.
+
+Given that the base model achieved a higher NDCG@5 score, I used the resulting relevance to plot a figure that compares the predicted versus true relevance:
+
+![Predicted vs true relevance](figures/3_predicted_vs_true_relevance.jpg)
+
+If we look at the predicted relevance first, we see that each bar represents a candidate ID with its predicted score on the y-axis. The model is showing that candidate 4 and 6 have the most relevance to the target, while 16 and 19 have the least.
+
+Comparing the predicted relevance to the true relevance shows that the model is not able to align with the true labels. Although it achieved high NDCG and MRR scores, there are only 21 candidates in the test set and 104 candidates in the entire dataset.
+
+## Conclusion<a name='conc'></a>
 
 Under construction...
