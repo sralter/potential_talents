@@ -4,9 +4,9 @@ Apziva: 6bImatZVlK6DnbEo
 
 ## Summary<a name='summary'></a>
 
-This project uses NLP techniques, like word embedding and Learning-to-Rank systems using neural networks (RankNet with PyTorch) and LightGBM's LGBMRanker to analyze a job candidate dataset. This project is split into two parts:
+This project uses NLP techniques, like word embedding and Learning-to-Rank systems using neural networks (RankNet with PyTorch) and LambdaRank (LightGBM's LGBMRanker) to analyze a job candidate dataset. This project is split into two parts:
 * [**Part 1**](#eda): More straightforward NLP analysis to ultimately rank the candidates base on their job title's similarity to the search terms
-* [**Part 2**](#p2): Implementing machine learning models for [Learning to Rank](https://towardsdatascience.com/learning-to-rank-a-complete-guide-to-ranking-using-machine-learning-4c9688d370d4) scoring systems.
+* [**Part 2**](#p2): Implementing machine learning models for [Learning to Rank](https://towardsdatascience.com/learning-to-rank-a-complete-guide-to-ranking-using-machine-learning-4c9688d370d4) scoring systems, specifically with RankNet in PyTorch and LambdaRank in LightGBM.
 
 ### Table of Contents<a name='toc'></a>
 
@@ -279,4 +279,4 @@ Comparing the predicted relevance to the true relevance shows that the model is 
 
 ## Conclusion<a name='conc'></a>
 
-This project covered a lot of ground. I used five word- and sentence embedding techniques (Tfidf, Word2Vec, GloVe, fastText, and SBERT) and calculated an ensemble score to rank candidates. Next, I used PyTorch to create the RankNet algorithm on the job candidates. Finally, I used the LGBMRanker model from LightGBM to generate ranks of candidates. Thanks to my work, the company has a suite of tools at their disposal to compare candidates.
+This project covered a lot of ground. I used five word- and sentence embedding techniques (Tfidf, Word2Vec, GloVe, fastText, and SBERT) and calculated an ensemble score to rank candidates. Next, I used PyTorch to create the RankNet algorithm on the job candidates. Finally, I used the LambdaRank model with LGBMRanker from LightGBM to generate ranks of candidates. Thanks to my work, the company has a suite of tools at their disposal to compare candidates.
