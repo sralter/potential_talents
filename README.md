@@ -7,6 +7,8 @@ Apziva: 6bImatZVlK6DnbEo
 Using NLP techniques to analyze a job candidate dataset. This project is split into two parts:
 * [**Part 1**](#eda): More straightforward NLP analysis to ultimately rank the candidates base on their job title's similarity to the search terms
 * [**Part 2**](#p2): Implementing machine learning models for [Learning to Rank](https://towardsdatascience.com/learning-to-rank-a-complete-guide-to-ranking-using-machine-learning-4c9688d370d4) scoring systems.
+  * [**RankNet**](#ranknet)
+  * [**LambdaRank**](#lambda)
 
 ## Overview<a name='overview'></a>
 
@@ -188,6 +190,53 @@ To log how many times each candidate "won" the probability determination, I crea
 
 ### LambdaRank<a name='lambda'></a>
 
+In an effort to explore other ranking algorithms, we will now turn to LambdaRank. It is an evolution of the RankNet algorithm that we worked on above. While RankNet looks to optimize pairwise accuracy, LambdaRank optimizes for ranking metrics like NDCG, or Normalized Discounted Cumulative Gain. It does not require pairwise comparisons as input. 
 
+NDCG checks not only if the first item should be ranked higher than the second, but also how much swapping their order would improve the final ranking. The gain can be thought of this way: if a relevant item is placed close to the top, it will have a greater gain than if a relevant item was placed towards the bottom. 
+
+LambdaRank uses **lambdas** that help adjust the model's focus to help improve the overall ranking quality, while RankNet takes advantage of a loss function and cares about individual rankings.
+
+You can read more about LambdaRank [here](https://tamaracucumides.medium.com/learning-to-rank-with-lightgbm-code-example-in-python-843bd7b44574). There's a short snippet of information about LambdaRank [from Microsoft](https://www.microsoft.com/en-us/research/publication/from-ranknet-to-lambdarank-to-lambdamart-an-overview/). Researchers there designed the algorithm.
+
+[This repository](https://github.com/Ransaka/LTR-with-LIghtGBM) gives a good example of how to implement the algorithm.
+
+LambdaRank uses the LightGBM algorithm and requires the following:
+* **Feature matrix (X)** of each item
+* **Relevance scores (y)** for each item
+* "**Groups**," or the number of items per query group 
+
+We saved our SBERT embedding work from Part 1 to pick up where we left off, this time using LambdaRank.
+
+The steps for this final part of the project were as follows:
+1. [Prepare the data](#1prep)
+2. [Split the data](#2split)
+3. [Train the LambdaRank model](#3train)
+4. [Test, evaluate, and plot](#4test)
+
+#### 1. Prepare the data<a name='1prep'></a>
+
+* **Feature matrix (X)**: Extracting each `job_title` tensor and converting it to a numpy array
+* **Relevance Scores**: Invert the ranks so that if the ranks are 1, 2, 3, the scores become 3, 2, 1
+* **Group** is defined in the [next step](#2split)
+
+#### 2. Split the data<a name='2split'></a>
+
+I split the data into training, validation, and testing sets. I defined the **groups** based on the number of candidates within each set.
+
+#### 3. Train the LambdaRank model<a name='3train'></a>
+
+| Parameter | Detail |
+|---|---|
+| objective | `lambdarank ` |
+| boosting_type | `gbdt ` |
+| metric | `ndcg ` |
+| n_estimators | `100 ` |
+| learning_rate | `0.1 ` |
+| importance_type | `gain ` |
+| random_state | `seed ` |
+
+Note: I defined a random seed at the beginning of this project and used it throughout.
+
+#### 4. Test, evaluate, and plot<a name='4test'></a>
 
 Under construction...
