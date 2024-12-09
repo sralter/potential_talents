@@ -4,9 +4,35 @@ Apziva: 6bImatZVlK6DnbEo
 
 ## Summary<a name='summary'></a>
 
-Using NLP techniques to analyze a job candidate dataset. This project is split into two parts:
+This project uses NLP techniques, like word embedding and Learning-to-Rank systems using neural networks (RankNet with PyTorch) and LambdaRank (LightGBM's LGBMRanker) to analyze a job candidate dataset. This project is split into two parts:
 * [**Part 1**](#eda): More straightforward NLP analysis to ultimately rank the candidates base on their job title's similarity to the search terms
-* [**Part 2**](#p2): Implementing machine learning models for [Learning to Rank](https://towardsdatascience.com/learning-to-rank-a-complete-guide-to-ranking-using-machine-learning-4c9688d370d4) scoring systems.
+* [**Part 2**](#p2): Implementing machine learning models for [Learning to Rank](https://towardsdatascience.com/learning-to-rank-a-complete-guide-to-ranking-using-machine-learning-4c9688d370d4) scoring systems, specifically with RankNet in PyTorch and LambdaRank in LightGBM.
+
+### Table of Contents<a name='toc'></a>
+
+1. Project introduction  
+1.1. [Summary](#summary)  
+1.2. [Table of Contents](#toc)  
+1.3. [Overview](#overview)  
+   1.3.1. [Goals](#goals)  
+   1.3.2. [The Dataset](#dataset)  
+2. [Part 1: EDA and Candidate Ranking from Text Embedding](#eda)  
+   2.1. [Connections](#connections)  
+   2.2. [Geographic Locations](#map)  
+   2.3. [Initial NLP](#nlp-init)  
+      2.3.1. [Text Embedding and Cosine Similarity](#embedding)  
+         2.3.1.1. [Notes on methods](#notes)  
+            2.3.1.1.1. [GloVe](#glove)  
+            2.3.1.1.2. [fastText](#fasttext)  
+            2.3.1.1.3. [SBERT](#sbert)  
+3. [Part 2 - Machine Learning Models Using Learning to Rank Systems](#p2)  
+   3.1. [RankNet](#ranknet)  
+   3.2. [LambdaRank](#lambda)  
+      3.2.1. [Prepare the data](#1prep)  
+      3.2.2. [Split the data](#2split)  
+      3.2.3. [Train the LambdaRank model](#3train)  
+      3.2.4. [Test, evaluate, and plot](#4test)  
+4. [Conclusion](#conc)  
 
 ## Overview<a name='overview'></a>
 
@@ -188,6 +214,69 @@ To log how many times each candidate "won" the probability determination, I crea
 
 ### LambdaRank<a name='lambda'></a>
 
+In an effort to explore other ranking algorithms, we will now turn to LambdaRank. It is an evolution of the RankNet algorithm that we worked on above. While RankNet looks to optimize pairwise accuracy, LambdaRank optimizes for ranking metrics like NDCG, or Normalized Discounted Cumulative Gain. A score of 1 means a perfect ranking of the items. It does not require pairwise comparisons as input. MRR is another metric that calculates the average of the reciprocal ranks (1 for first place, 1/2 for second place, 1/3 for third place, and so on). Values closer to 1 mean that the model did a good job of ordering candidates.
 
+NDCG checks not only if the first item should be ranked higher than the second, but also how much swapping their order would improve the final ranking. The gain can be thought of this way: if a relevant item is placed close to the top, it will have a greater gain than if a relevant item was placed towards the bottom. 
 
-Under construction...
+LambdaRank uses **lambdas** that help adjust the model's focus to help improve the overall ranking quality, while RankNet takes advantage of a loss function and cares about individual rankings.
+
+You can read more about LambdaRank [here](https://tamaracucumides.medium.com/learning-to-rank-with-lightgbm-code-example-in-python-843bd7b44574). There's a short snippet of information about LambdaRank [from Microsoft](https://www.microsoft.com/en-us/research/publication/from-ranknet-to-lambdarank-to-lambdamart-an-overview/). Researchers there designed the algorithm.
+
+[This repository](https://github.com/Ransaka/LTR-with-LIghtGBM) gives a good example of how to implement the algorithm.
+
+LambdaRank uses the LightGBM algorithm and requires the following:
+* **Feature matrix (X)** of each item
+* **Relevance scores (y)** for each item
+* "**Groups**," or the number of items per query group 
+
+We saved our SBERT embedding work from Part 1 to pick up where we left off, this time using LambdaRank.
+
+The steps for this final part of the project were as follows:
+1. [Prepare the data](#1prep)
+2. [Split the data](#2split)
+3. [Train the LambdaRank model](#3train)
+4. [Test, evaluate, and plot](#4test)
+
+#### 1. Prepare the data<a name='1prep'></a>
+
+* **Feature matrix (X)**: Extracting each `job_title` tensor and converting it to a numpy array
+* **Relevance Scores**: Invert the ranks so that if the ranks are 1, 2, 3, the scores become 3, 2, 1
+* **Group** is defined in the [next step](#2split)
+
+#### 2. Split the data<a name='2split'></a>
+
+I split the data into training, validation, and testing sets. I defined the **groups** based on the number of candidates within each set.
+
+#### 3. Train the LambdaRank model<a name='3train'></a>
+
+I used the following parameters to train the model:
+
+| Parameter | Detail |
+|---|---|
+| objective | `lambdarank ` |
+| boosting_type | `gbdt ` |
+| metric | `ndcg ` |
+| n_estimators | `100 ` |
+| learning_rate | `0.1 ` |
+| importance_type | `gain ` |
+| random_state | `seed ` |
+
+Note: I defined a random seed at the beginning of this project and used it throughout.
+
+#### 4. Test, evaluate, and plot<a name='4test'></a>
+
+The model achieved an NDCG@5 score of 0.9223, which is quite good! The MRR score was 1. This is exceptionally high and probably suggests that the model is overfitting in some way.
+
+I thought to run a quick Optuna hyperparameter optimization search, though the resulting NDCG@5 score was lower, at 0.8969. The MRR score stayed at 1.
+
+Given that the base model achieved a higher NDCG@5 score, I used the resulting relevance to plot a figure that compares the predicted versus true relevance:
+
+![Predicted vs true relevance](figures/3_predicted_vs_true_relevance.jpg)
+
+If we look at the predicted relevance first, we see that each bar represents a candidate ID with its predicted score on the y-axis. The model is showing that candidate 4 and 6 have the most relevance to the target, while 16 and 19 have the least.
+
+Comparing the predicted relevance to the true relevance shows that the model is not able to align with the true labels. Although it achieved high NDCG and MRR scores, there are only 21 candidates in the test set and 104 candidates in the entire dataset.
+
+## Conclusion<a name='conc'></a>
+
+This project covered a lot of ground. I used five word- and sentence embedding techniques (Tfidf, Word2Vec, GloVe, fastText, and SBERT) and calculated an ensemble score to rank candidates. Next, I used PyTorch to create the RankNet algorithm on the job candidates. Finally, I used the LambdaRank model with LGBMRanker from LightGBM to generate ranks of candidates. Thanks to my work, the company has a suite of tools at their disposal to compare candidates.
