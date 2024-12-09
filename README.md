@@ -279,4 +279,4 @@ Comparing the predicted relevance to the true relevance shows that the model is 
 
 ## Conclusion<a name='conc'></a>
 
-Under construction...
+This project covered a lot of ground. I used five word- and sentence embedding techniques (Tfidf, Word2Vec, GloVe, fastText, and SBERT) and calculated an ensemble score to rank candidates. Next, I used PyTorch to create the RankNet algorithm on the job candidates. Finally, I used the LGBMRanker model from LightGBM to generate ranks of candidates. Thanks to my work, the company has a suite of tools at their disposal to compare candidates.
