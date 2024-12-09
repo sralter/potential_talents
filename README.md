@@ -190,7 +190,7 @@ To log how many times each candidate "won" the probability determination, I crea
 
 ### LambdaRank<a name='lambda'></a>
 
-In an effort to explore other ranking algorithms, we will now turn to LambdaRank. It is an evolution of the RankNet algorithm that we worked on above. While RankNet looks to optimize pairwise accuracy, LambdaRank optimizes for ranking metrics like NDCG, or Normalized Discounted Cumulative Gain. It does not require pairwise comparisons as input. 
+In an effort to explore other ranking algorithms, we will now turn to LambdaRank. It is an evolution of the RankNet algorithm that we worked on above. While RankNet looks to optimize pairwise accuracy, LambdaRank optimizes for ranking metrics like NDCG, or Normalized Discounted Cumulative Gain. A score of 1 means a perfect ranking of the items. It does not require pairwise comparisons as input. MRR is another metric that calculates the average of the reciprocal ranks (1 for first place, 1/2 for second place, 1/3 for third place, and so on). Values closer to 1 mean that the model did a good job of ordering candidates.
 
 NDCG checks not only if the first item should be ranked higher than the second, but also how much swapping their order would improve the final ranking. The gain can be thought of this way: if a relevant item is placed close to the top, it will have a greater gain than if a relevant item was placed towards the bottom. 
 
@@ -238,5 +238,7 @@ I split the data into training, validation, and testing sets. I defined the **gr
 Note: I defined a random seed at the beginning of this project and used it throughout.
 
 #### 4. Test, evaluate, and plot<a name='4test'></a>
+
+The model achieved an NDCG@5 score of 0.9223, which is quite good! The MRR score was 
 
 Under construction...
