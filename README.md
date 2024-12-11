@@ -277,6 +277,10 @@ If we look at the predicted relevance first, we see that each bar represents a c
 
 Comparing the predicted relevance to the true relevance shows that the model is not able to align with the true labels. Although it achieved high NDCG and MRR scores, there are only 21 candidates in the test set and 104 candidates in the entire dataset.
 
+Finally, let's compare the results of LambdaRank against RankNet. Although I was unable to hide the green lines beyond the bounds of the box, but we can see that the two methods have different results. The point with this jumbled figure is to show that these two methods are clearly focusing on different aspects of the data when giving their ranks. I will also add that the dataset was small and as the company adds more candidates to their search, the models may be more equal in their determination. Furthermore, when I manually adjusted some of the rankings, I could have been inconsistent and the models are not sure what to focus on as a strong signal.
+
+![Results of LambdaRank](figures/3_pt2_comparison.jpg)
+
 ## Conclusion<a name='conc'></a>
 
 This project covered a lot of ground. I used five word- and sentence embedding techniques (Tfidf, Word2Vec, GloVe, fastText, and SBERT) and calculated an ensemble score to rank candidates. Next, I used PyTorch to create the RankNet algorithm on the job candidates. Finally, I used the LambdaRank model with LGBMRanker from LightGBM to generate ranks of candidates. Thanks to my work, the company has a suite of tools at their disposal to compare candidates.
