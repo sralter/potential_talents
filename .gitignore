@@ -7,3 +7,6 @@ data/
 *.gv.pdf
 *.gv.jpg
 *.png
+archive/
+hugging_face_access_token.txt
+
