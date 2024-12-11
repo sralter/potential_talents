@@ -277,6 +277,10 @@ If we look at the predicted relevance first, we see that each bar represents a c
 
 Comparing the predicted relevance to the true relevance shows that the model is not able to align with the true labels. Although it achieved high NDCG and MRR scores, there are only 21 candidates in the test set and 104 candidates in the entire dataset.
 
+Below we can see the candidates and their associated job titles, in the same style of figure that we used for the RankNet.
+
+![LambdaRank positions and job_titles](figures/3_lamdbarank_scores.jpg)
+
 Finally, let's compare the results of LambdaRank against RankNet. Although I was unable to hide the green lines beyond the bounds of the box, but we can see that the two methods have different results. The point with this jumbled figure is to show that these two methods are clearly focusing on different aspects of the data when giving their ranks. I will also add that the dataset was small and as the company adds more candidates to their search, the models may be more equal in their determination. Furthermore, when I manually adjusted some of the rankings, I could have been inconsistent and the models are not sure what to focus on as a strong signal.
 
 ![Results of LambdaRank](figures/3_pt2_comparison.jpg)
