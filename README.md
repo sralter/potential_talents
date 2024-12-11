@@ -4,7 +4,7 @@ Apziva: 6bImatZVlK6DnbEo
 
 ## Summary<a name='summary'></a>
 
-This project uses NLP techniques, like word embedding and Learning-to-Rank systems using neural networks (RankNet with PyTorch) and LambdaRank (LightGBM's LGBMRanker) to analyze a job candidate dataset. This project is split into two parts:
+This project uses NLP techniques like word embedding and Learning-to-Rank systems using neural networks (RankNet with PyTorch) and LambdaRank (LightGBM's LGBMRanker) to analyze a job candidate dataset. This project is split into two parts:
 * [**Part 1**](#eda): More straightforward NLP analysis to ultimately rank the candidates base on their job title's similarity to the search terms
 * [**Part 2**](#p2): Implementing machine learning models for [Learning to Rank](https://towardsdatascience.com/learning-to-rank-a-complete-guide-to-ranking-using-machine-learning-4c9688d370d4) scoring systems, specifically with RankNet in PyTorch and LambdaRank in LightGBM.
 
